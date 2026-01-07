@@ -225,16 +225,16 @@ MAIN:
 }
 
 func (s *Manager) launchSupplier() {
+	s.wgSupplier.Add(1)
 	go func() {
-		s.wgSupplier.Add(1)
 		defer s.wgSupplier.Done()
 		NewSupplier(s.ctx, s.messages).Run()
 	}()
 }
 
 func (s *Manager) launchConsumer() {
+	s.wgConsumer.Add(1)
 	go func() {
-		s.wgConsumer.Add(1)
 		defer s.wgConsumer.Done()
 		NewConsumer(s.ctx, s.messages, s.chError).Run()
 	}()
